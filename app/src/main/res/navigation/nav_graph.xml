@@ -7,9 +7,17 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.spaceflightnews.ui.main.MainFragment"
-        android:label="MainFragment" />
+        android:label="Spaceflights">
+        <action
+            android:id="@+id/action_mainFragment_to_singleFragment"
+            app:destination="@id/singleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/singleFragment"
         android:name="com.example.spaceflightnews.ui.single.SingleFragment"
-        android:label="SingleFragment" />
+        android:label="Article">
+        <argument
+            android:name="articleId"
+            app:argType="long" />
+    </fragment>
 </navigation>

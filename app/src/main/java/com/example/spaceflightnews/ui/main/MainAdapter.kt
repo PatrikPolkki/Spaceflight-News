@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spaceflightnews.data.model.Articles
 import com.example.spaceflightnews.databinding.ArticleItemBinding
 
-class MainAdapter : ListAdapter<Articles, MainAdapter.ViewHolder>(DiffCallback) {
+class MainAdapter(private val cellClickListener: CellClickListener) :
+    ListAdapter<Articles, MainAdapter.ViewHolder>(DiffCallback) {
 
     // Handles a changes in incoming list
     companion object {
@@ -34,5 +35,9 @@ class MainAdapter : ListAdapter<Articles, MainAdapter.ViewHolder>(DiffCallback) 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val articleItem = getItem(position)
         holder.binding.articleItem = articleItem
+
+        holder.itemView.setOnClickListener {
+            cellClickListener.onCellClickListener(articleItem.id)
+        }
     }
 }

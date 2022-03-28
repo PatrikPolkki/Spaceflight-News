@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spaceflightnews.data.model.Articles
 import com.example.spaceflightnews.databinding.FragmentMainBinding
 
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), CellClickListener {
     private lateinit var binding: FragmentMainBinding
     private val viewModel: MainViewModel by viewModels()
 
@@ -30,7 +31,7 @@ class MainFragment : Fragment() {
 
         binding.articleRv.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = MainAdapter()
+            adapter = MainAdapter(this@MainFragment)
 
             val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
             addItemDecoration(dividerItemDecoration)
@@ -47,5 +48,10 @@ class MainFragment : Fragment() {
     private val articleListObserver = Observer<List<Articles>> {
         val adapter = binding.articleRv.adapter as MainAdapter
         adapter.submitList(it)
+    }
+
+    override fun onCellClickListener(id: Long) {
+        val action = MainFragmentDirections.actionMainFragmentToSingleFragment(id)
+        this.findNavController().navigate(action)
     }
 }
