@@ -1,6 +1,10 @@
 package com.example.spaceflightnews.data.model
 
-data class Articles(
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Article(
     val id: Long,
     val title: String,
     val url: String,
@@ -12,14 +16,16 @@ data class Articles(
     val featured: Boolean,
     val launches: List<Launches>?,
     val events: List<Events>?
-)
+) : Parcelable
 
+@Parcelize
 data class Launches(
     val id: String,
     val provider: String
-)
+) : Parcelable
 
+@Parcelize
 data class Events(
     val id: Long,
     val provider: String
-)
+) : Parcelable
