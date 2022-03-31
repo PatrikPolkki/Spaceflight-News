@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.databinding.FragmentMainBinding
@@ -29,8 +28,10 @@ class MainFragment : Fragment(), CellClickListener {
             layoutManager = LinearLayoutManager(context)
             adapter = MainAdapter(this@MainFragment)
 
+            /*
             val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
             addItemDecoration(dividerItemDecoration)
+             */
         }
         setArticleListToRv()
         

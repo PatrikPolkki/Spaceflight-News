@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.databinding.FragmentSingleBinding
 
 class SingleFragment : Fragment() {
@@ -23,10 +25,19 @@ class SingleFragment : Fragment() {
         binding = FragmentSingleBinding.inflate(layoutInflater)
         binding.apply {
             singleViewModel = viewModel
-            lifecycleOwner = this@SingleFragment
+            lifecycleOwner = viewLifecycleOwner
         }
-
         viewModel.addArticle(args.article)
         return binding.root
+    }
+
+    private fun getRelatedNews() {
+        viewModel.singleArticle.observe(viewLifecycleOwner, relatedNewsObserver)
+    }
+
+    private val relatedNewsObserver = Observer<Article> {
+        if (it.events?.isNotEmpty() == true) {
+            viewModel.getEvents(it.events)
+        }
     }
 }

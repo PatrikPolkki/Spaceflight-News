@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Spaceflight News</string>
+    <string name="article_card_transition_name">article_card_%1$s</string>
+    <string name="article_card_single_transition_name">article_card_single</string>
 </resources>
