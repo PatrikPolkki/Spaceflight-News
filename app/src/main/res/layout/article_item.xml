@@ -6,7 +6,7 @@
 
         <variable
             name="articleItem"
-            type="com.example.spaceflightnews.data.model.Articles" />
+            type="com.example.spaceflightnews.data.model.Article" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

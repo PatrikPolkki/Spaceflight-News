@@ -17,7 +17,7 @@
         android:name="com.example.spaceflightnews.ui.single.SingleFragment"
         android:label="Article">
         <argument
-            android:name="articleId"
-            app:argType="long" />
+            android:name="article"
+            app:argType="com.example.spaceflightnews.data.model.Article" />
     </fragment>
 </navigation>

@@ -1,7 +1,6 @@
 package com.example.spaceflightnews.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.spaceflightnews.data.model.Articles
+import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.databinding.FragmentMainBinding
 
 
@@ -25,9 +24,6 @@ class MainFragment : Fragment(), CellClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(layoutInflater)
-        viewModel.articleResults.observe(viewLifecycleOwner) {
-            Log.d("RETROFIT", it.toString())
-        }
 
         binding.articleRv.apply {
             layoutManager = LinearLayoutManager(context)
@@ -45,13 +41,13 @@ class MainFragment : Fragment(), CellClickListener {
         viewModel.articleResults.observe(viewLifecycleOwner, articleListObserver)
     }
 
-    private val articleListObserver = Observer<List<Articles>> {
+    private val articleListObserver = Observer<List<Article>> {
         val adapter = binding.articleRv.adapter as MainAdapter
         adapter.submitList(it)
     }
 
-    override fun onCellClickListener(id: Long) {
-        val action = MainFragmentDirections.actionMainFragmentToSingleFragment(id)
+    override fun onCellClickListener(article: Article) {
+        val action = MainFragmentDirections.actionMainFragmentToSingleFragment(article)
         this.findNavController().navigate(action)
     }
 }
