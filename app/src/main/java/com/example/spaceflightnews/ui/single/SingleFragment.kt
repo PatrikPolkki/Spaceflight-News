@@ -1,6 +1,7 @@
 package com.example.spaceflightnews.ui.single
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,18 @@ class SingleFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
         viewModel.addArticle(args.article)
+        getRelatedNews()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.eventArticles.observe(viewLifecycleOwner) {
+            Log.d("EVENTS", it.toString())
+        }
+        viewModel.launchArticles.observe(viewLifecycleOwner) {
+            Log.d("ARTICLES", it.toString())
+        }
     }
 
     private fun getRelatedNews() {
@@ -36,8 +48,13 @@ class SingleFragment : Fragment() {
     }
 
     private val relatedNewsObserver = Observer<Article> {
-        if (it.events?.isNotEmpty() == true) {
+        if (it.events.isNotEmpty()) {
             viewModel.getEvents(it.events)
+        }
+        if (it.launches.isNotEmpty()) {
+            viewModel.getLaunches(it.launches)
+        } else {
+            return@Observer
         }
     }
 }
