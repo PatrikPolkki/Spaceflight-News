@@ -36,10 +36,10 @@ class SingleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.eventArticles.observe(viewLifecycleOwner) {
-            Log.d("EVENTS", it.toString())
+            Log.d("EVENTS", it.size.toString())
         }
         viewModel.launchArticles.observe(viewLifecycleOwner) {
-            Log.d("ARTICLES", it.toString())
+            Log.d("ARTICLES", it.size.toString())
         }
     }
 

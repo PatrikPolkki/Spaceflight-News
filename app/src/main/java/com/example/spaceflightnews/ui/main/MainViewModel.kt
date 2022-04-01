@@ -21,12 +21,12 @@ class MainViewModel : ViewModel() {
         get() = _articleResult
 
     init {
-        getArticles()
+        getArticles(7)
     }
 
-    private fun getArticles() {
+    fun getArticles(limit: Int) {
         viewModelScope.launch {
-            repository.getArticles(7).collect {
+            repository.getArticles(limit).collect {
                 _articleResult.value = it
             }
         }
