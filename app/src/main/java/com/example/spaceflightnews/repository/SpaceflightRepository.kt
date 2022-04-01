@@ -29,15 +29,27 @@ object SpaceflightRepository {
 
     suspend fun getEvents(id: Long): Flow<List<Article>> {
         return flow {
-            val eventList = serviceCall.getEvents(id)
-            emit(eventList)
+            try {
+                val eventList = serviceCall.getEvents(id)
+                emit(eventList)
+            } catch (e: HttpException) {
+                e.message?.let { Log.e("HttpException", it) }
+            } catch (e: IOException) {
+                e.message?.let { Log.e("IOException", it) }
+            }
         }.flowOn(Dispatchers.IO)
     }
 
     suspend fun getLaunches(id: String): Flow<List<Article>> {
         return flow {
-            val launchList = serviceCall.getLaunches(id)
-            emit(launchList)
+            try {
+                val launchList = serviceCall.getLaunches(id)
+                emit(launchList)
+            } catch (e: HttpException) {
+                e.message?.let { Log.e("HttpException", it) }
+            } catch (e: IOException) {
+                e.message?.let { Log.e("IOException", it) }
+            }
         }.flowOn(Dispatchers.IO)
     }
 }
