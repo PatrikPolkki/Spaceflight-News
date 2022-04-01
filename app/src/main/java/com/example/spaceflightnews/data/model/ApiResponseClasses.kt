@@ -14,8 +14,8 @@ data class Article(
     val publishedAt: String,
     val updatedAt: String,
     val featured: Boolean,
-    val launches: List<Launches>?,
-    val events: List<Events>?
+    val launches: List<Launches>,
+    val events: List<Events>
 ) : Parcelable
 
 @Parcelize

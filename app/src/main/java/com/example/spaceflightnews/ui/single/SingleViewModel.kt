@@ -8,7 +8,7 @@ import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.data.model.Events
 import com.example.spaceflightnews.data.model.Launches
 import com.example.spaceflightnews.repository.SpaceflightRepository
-import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SingleViewModel : ViewModel() {
@@ -25,23 +25,35 @@ class SingleViewModel : ViewModel() {
         _singleArticle.value = article
     }
 
-    fun getLaunches(launches: List<Launches>) {
-        viewModelScope.launch {
-            for (l in launches) {
-                val launch = async {
+    private val _eventArticles: MutableLiveData<List<Article>> by lazy {
+        MutableLiveData<List<Article>>()
+    }
 
-                }
+    val eventArticles: LiveData<List<Article>>
+        get() = _eventArticles
+
+    private val _launchArticles: MutableLiveData<List<Article>> by lazy {
+        MutableLiveData<List<Article>>()
+    }
+
+    val launchArticles: LiveData<List<Article>>
+        get() = _launchArticles
+
+    fun getLaunches(launches: List<Launches>) {
+        val firstId = launches.first().id
+        viewModelScope.launch {
+            repository.getLaunches(firstId).collect {
+                _launchArticles.value = it
             }
         }
     }
 
     fun getEvents(event: List<Events>) {
+        val firstId = event.first().id
         viewModelScope.launch {
-            for (e in event) {
-                val event = async {
-                }
+            repository.getEvents(firstId).collect {
+                _eventArticles.value = it
             }
-
         }
     }
 }
