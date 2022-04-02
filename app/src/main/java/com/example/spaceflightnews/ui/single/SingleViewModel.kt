@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.data.model.Events
 import com.example.spaceflightnews.data.model.Launches
-import com.example.spaceflightnews.repository.SpaceflightRepository
+import com.example.spaceflightnews.data.repository.SpaceflightRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 

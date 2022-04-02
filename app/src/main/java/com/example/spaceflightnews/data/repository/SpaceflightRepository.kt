@@ -1,4 +1,4 @@
-package com.example.spaceflightnews.repository
+package com.example.spaceflightnews.data.repository
 
 import android.util.Log
 import com.example.spaceflightnews.data.api.RetrofitInstance
