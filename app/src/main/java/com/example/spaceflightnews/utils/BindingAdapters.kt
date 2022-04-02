@@ -1,6 +1,8 @@
 package com.example.spaceflightnews.utils
 
+import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -31,4 +33,18 @@ fun bindDate(view: TextView, article: Article) {
     }
 
     view.text = formattedDate ?: ""
+}
+
+@BindingAdapter("loading")
+fun bindLoading(view: View, isLoading: Boolean) {
+
+    when (view) {
+        is ProgressBar -> {
+            view.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+        else -> {
+            view.visibility = if (isLoading) View.GONE else View.VISIBLE
+        }
+    }
+
 }

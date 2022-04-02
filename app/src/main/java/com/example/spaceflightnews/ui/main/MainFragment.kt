@@ -23,6 +23,10 @@ class MainFragment : Fragment(), CellClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(layoutInflater)
+        binding.apply {
+            mainViewModel = viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
 
         binding.articleRv.apply {
             layoutManager = LinearLayoutManager(context)
@@ -49,9 +53,9 @@ class MainFragment : Fragment(), CellClickListener {
         viewModel.articleResults.observe(viewLifecycleOwner, articleListObserver)
     }
 
-    private val articleListObserver = Observer<List<Article>> {
+    private val articleListObserver = Observer<ArticleListState> {
         val adapter = binding.articleRv.adapter as MainAdapter
-        adapter.submitList(it)
+        adapter.submitList(it.articles)
     }
 
     override fun onCellClickListener(article: Article) {

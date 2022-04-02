@@ -3,6 +3,7 @@ package com.example.spaceflightnews.data.repository
 import android.util.Log
 import com.example.spaceflightnews.data.api.RetrofitInstance
 import com.example.spaceflightnews.data.model.Article
+import com.example.spaceflightnews.utils.Recourse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,15 +15,16 @@ object SpaceflightRepository {
     private val retrofitInstance = RetrofitInstance
     private val serviceCall = retrofitInstance.service
 
-    suspend fun getArticles(limit: Int): Flow<List<Article>> {
+    suspend fun getArticles(limit: Int): Flow<Recourse<List<Article>>> {
         return flow {
             try {
+                emit(Recourse.Loading())
                 val articleList = serviceCall.getArticles(limit)
-                emit(articleList)
+                emit(Recourse.Success(articleList))
             } catch (e: HttpException) {
-                e.message?.let { Log.e("HttpException", it) }
+                emit(Recourse.Error(e.localizedMessage ?: "An unexpected error."))
             } catch (e: IOException) {
-                e.message?.let { Log.e("IOException", it) }
+                emit(Recourse.Error("Couldn't reach server."))
             }
         }.flowOn(Dispatchers.IO)
     }
