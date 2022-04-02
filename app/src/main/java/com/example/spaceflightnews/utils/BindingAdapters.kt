@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.example.spaceflightnews.R
 import com.example.spaceflightnews.data.model.Article
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -17,6 +18,7 @@ fun bindImage(image: ImageView, article: Article) {
     Glide.with(image)
         .load(article.imageUrl)
         .centerCrop()
+        .error(R.drawable.ic_baseline_image_not_supported_24)
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(image)
 }
