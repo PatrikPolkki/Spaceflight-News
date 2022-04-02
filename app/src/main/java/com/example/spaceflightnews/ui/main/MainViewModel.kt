@@ -6,18 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.data.repository.SpaceflightRepository
+import com.example.spaceflightnews.utils.Recourse
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
     private val repository = SpaceflightRepository
 
-    private val _articleResult: MutableLiveData<List<Article>> by lazy {
-        MutableLiveData<List<Article>>().also {
-            it.value = listOf()
-        }
+    private val _articleResult: MutableLiveData<ArticleListState> by lazy {
+        MutableLiveData<ArticleListState>()
     }
-    val articleResults: LiveData<List<Article>>
+    val articleResults: LiveData<ArticleListState>
         get() = _articleResult
 
     init {
@@ -26,9 +25,27 @@ class MainViewModel : ViewModel() {
 
     fun getArticles(limit: Int) {
         viewModelScope.launch {
-            repository.getArticles(limit).collect {
-                _articleResult.value = it
+            repository.getArticles(limit).collect { result ->
+                when (result) {
+                    is Recourse.Success -> {
+                        _articleResult.value =
+                            ArticleListState(articles = result.data ?: emptyList())
+                    }
+                    is Recourse.Error -> {
+                        _articleResult.value =
+                            ArticleListState(error = result.massage ?: "An unexpected error")
+                    }
+                    is Recourse.Loading -> {
+                        _articleResult.value = ArticleListState(isLoading = true)
+                    }
+                }
             }
         }
     }
 }
+
+data class ArticleListState(
+    val isLoading: Boolean = false,
+    val articles: List<Article> = emptyList(),
+    val error: String = ""
+)
