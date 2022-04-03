@@ -2,6 +2,7 @@ package com.example.spaceflightnews.utils
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -48,5 +49,16 @@ fun bindLoading(view: View, isLoading: Boolean) {
             view.visibility = if (isLoading) View.GONE else View.VISIBLE
         }
     }
+}
 
+@BindingAdapter("articlesVisibility")
+fun bindArticleVisibility(view: LinearLayout, articleList: List<Article>?) {
+    articleList?.let {
+
+    }
+    if (articleList != null && articleList.isNotEmpty()) {
+        view.visibility = View.VISIBLE
+    } else {
+        view.visibility = View.GONE
+    }
 }

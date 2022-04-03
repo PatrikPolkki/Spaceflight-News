@@ -8,6 +8,8 @@ import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.data.model.Events
 import com.example.spaceflightnews.data.model.Launches
 import com.example.spaceflightnews.data.repository.SpaceflightRepository
+import com.example.spaceflightnews.ui.ArticleListState
+import com.example.spaceflightnews.utils.Recourse
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -25,25 +27,37 @@ class SingleViewModel : ViewModel() {
         _singleArticle.value = article
     }
 
-    private val _eventArticles: MutableLiveData<List<Article>> by lazy {
-        MutableLiveData<List<Article>>()
+    private val _eventArticles: MutableLiveData<ArticleListState> by lazy {
+        MutableLiveData<ArticleListState>()
     }
 
-    val eventArticles: LiveData<List<Article>>
+    val eventArticles: LiveData<ArticleListState>
         get() = _eventArticles
 
-    private val _launchArticles: MutableLiveData<List<Article>> by lazy {
-        MutableLiveData<List<Article>>()
+    private val _launchArticles: MutableLiveData<ArticleListState> by lazy {
+        MutableLiveData<ArticleListState>()
     }
 
-    val launchArticles: LiveData<List<Article>>
+    val launchArticles: LiveData<ArticleListState>
         get() = _launchArticles
 
     fun getLaunches(launches: List<Launches>) {
         val firstId = launches.first().id
         viewModelScope.launch {
-            repository.getLaunches(firstId).collect {
-                _launchArticles.value = it
+            repository.getLaunches(firstId).collect { result ->
+                when (result) {
+                    is Recourse.Success -> {
+                        _launchArticles.value =
+                            ArticleListState(articles = result.data ?: emptyList())
+                    }
+                    is Recourse.Error -> {
+                        _launchArticles.value =
+                            ArticleListState(error = result.massage ?: "An unexpected error")
+                    }
+                    is Recourse.Loading -> {
+                        _launchArticles.value = ArticleListState(isLoading = true)
+                    }
+                }
             }
         }
     }
@@ -51,8 +65,20 @@ class SingleViewModel : ViewModel() {
     fun getEvents(event: List<Events>) {
         val firstId = event.first().id
         viewModelScope.launch {
-            repository.getEvents(firstId).collect {
-                _eventArticles.value = it
+            repository.getEvents(firstId).collect { result ->
+                when (result) {
+                    is Recourse.Success -> {
+                        _eventArticles.value =
+                            ArticleListState(articles = result.data ?: emptyList())
+                    }
+                    is Recourse.Error -> {
+                        _eventArticles.value =
+                            ArticleListState(error = result.massage ?: "An unexpected error")
+                    }
+                    is Recourse.Loading -> {
+                        _eventArticles.value = ArticleListState(isLoading = true)
+                    }
+                }
             }
         }
     }
