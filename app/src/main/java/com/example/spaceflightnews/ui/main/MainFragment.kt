@@ -32,12 +32,8 @@ class MainFragment : Fragment(), CellClickListener {
         binding.articleRv.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = MainAdapter(this@MainFragment)
-
-            /*
-            val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-            addItemDecoration(dividerItemDecoration)
-             */
         }
+
         setArticleListToRv()
         return binding.root
     }

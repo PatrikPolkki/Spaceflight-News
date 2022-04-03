@@ -39,7 +39,6 @@ object SpaceflightRepository {
         }
     }.flowOn(Dispatchers.IO)
 
-
     fun getLaunches(id: String): Flow<Recourse<List<Article>>> = flow {
         try {
             emit(Recourse.Loading())
@@ -52,5 +51,4 @@ object SpaceflightRepository {
             emit(Recourse.Error("Couldn't reach server."))
         }
     }.flowOn(Dispatchers.IO)
-
 }
