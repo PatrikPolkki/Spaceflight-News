@@ -30,8 +30,8 @@
                 <ImageView
                     setImage="@{articleItem}"
                     android:layout_width="match_parent"
-                    android:layout_height="194dp"
-                    android:contentDescription="testi"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/article_image"
                     android:scaleType="centerCrop" />
 
                 <LinearLayout

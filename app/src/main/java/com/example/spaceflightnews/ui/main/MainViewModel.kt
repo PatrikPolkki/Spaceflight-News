@@ -13,15 +13,16 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
     private val repository = SpaceflightRepository
 
+    init {
+        getArticles(7)
+    }
+
     private val _articleResult: MutableLiveData<ArticleListState> by lazy {
         MutableLiveData<ArticleListState>()
     }
+
     val articleResults: LiveData<ArticleListState>
         get() = _articleResult
-
-    init {
-        getArticles(20)
-    }
 
     fun getArticles(limit: Int) {
         viewModelScope.launch {

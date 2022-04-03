@@ -43,8 +43,8 @@ class SingleFragment : Fragment(), CellClickListener {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = SingleAdapter(this@SingleFragment)
         }
-        viewModel.addArticle(args.article)
-        getRelatedNews()
+        viewModel.addArticleToViewModel(args.article)
+        getRelatedArticles()
         return binding.root
     }
 
@@ -53,7 +53,7 @@ class SingleFragment : Fragment(), CellClickListener {
         viewModel.eventArticles.observe(viewLifecycleOwner, eventsListObserver)
         viewModel.launchArticles.observe(viewLifecycleOwner, launchesListObserver)
 
-        binding.readMore.setOnClickListener {
+        binding.readMoreButton.setOnClickListener {
             viewModel.singleArticle.value?.url?.let { it1 -> openWebPage(it1) }
         }
     }
@@ -68,8 +68,8 @@ class SingleFragment : Fragment(), CellClickListener {
         }
     }
 
-    private fun getRelatedNews() {
-        viewModel.singleArticle.observe(viewLifecycleOwner, relatedNewsObserver)
+    private fun getRelatedArticles() {
+        viewModel.singleArticle.observe(viewLifecycleOwner, relatedArticlesObserver)
     }
 
     private val launchesListObserver = Observer<ArticleListState> {
@@ -88,12 +88,12 @@ class SingleFragment : Fragment(), CellClickListener {
         adapter.submitList(relatedNewsList)
     }
 
-    private val relatedNewsObserver = Observer<Article> {
+    private val relatedArticlesObserver = Observer<Article> {
         if (it.events.isNotEmpty() && viewModel.launchArticles.value == null) {
-            viewModel.getEvents(it.events)
+            viewModel.getEvents(it.events.first().id)
         }
         if (it.launches.isNotEmpty() && viewModel.launchArticles.value == null) {
-            viewModel.getLaunches(it.launches)
+            viewModel.getLaunches(it.launches.first().id)
         } else {
             return@Observer
         }

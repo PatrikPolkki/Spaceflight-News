@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spaceflightnews.data.model.Article
-import com.example.spaceflightnews.data.model.Events
-import com.example.spaceflightnews.data.model.Launches
 import com.example.spaceflightnews.data.repository.SpaceflightRepository
 import com.example.spaceflightnews.ui.ArticleListState
 import com.example.spaceflightnews.utils.Recourse
@@ -23,7 +21,7 @@ class SingleViewModel : ViewModel() {
     val singleArticle: LiveData<Article>
         get() = _singleArticle
 
-    fun addArticle(article: Article) {
+    fun addArticleToViewModel(article: Article) {
         _singleArticle.value = article
     }
 
@@ -41,10 +39,9 @@ class SingleViewModel : ViewModel() {
     val launchArticles: LiveData<ArticleListState>
         get() = _launchArticles
 
-    fun getLaunches(launches: List<Launches>) {
-        val firstId = launches.first().id
+    fun getLaunches(id: String) {
         viewModelScope.launch {
-            repository.getLaunches(firstId).collect { result ->
+            repository.getLaunches(id).collect { result ->
                 when (result) {
                     is Recourse.Success -> {
                         _launchArticles.value =
@@ -62,10 +59,9 @@ class SingleViewModel : ViewModel() {
         }
     }
 
-    fun getEvents(event: List<Events>) {
-        val firstId = event.first().id
+    fun getEvents(id: Long) {
         viewModelScope.launch {
-            repository.getEvents(firstId).collect { result ->
+            repository.getEvents(id).collect { result ->
                 when (result) {
                     is Recourse.Success -> {
                         _eventArticles.value =
