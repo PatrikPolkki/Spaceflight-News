@@ -30,9 +30,7 @@ object SpaceflightRepository {
         try {
             emit(Recourse.Loading())
             val eventList = serviceCall.getEvents(id)
-            val filteredList = eventList.filter {
-                eventList.size < 6
-            }
+            val filteredList = if (eventList.size > 5) eventList.take(5) else eventList
             emit(Recourse.Success(filteredList))
         } catch (e: HttpException) {
             emit(Recourse.Error(e.localizedMessage ?: "An unexpected error."))
@@ -46,9 +44,7 @@ object SpaceflightRepository {
         try {
             emit(Recourse.Loading())
             val launchList = serviceCall.getLaunches(id)
-            val filteredList = launchList.filter {
-                launchList.size < 6
-            }
+            val filteredList = if (launchList.size > 5) launchList.take(5) else launchList
             emit(Recourse.Success(filteredList))
         } catch (e: HttpException) {
             emit(Recourse.Error(e.localizedMessage ?: "An unexpected error."))

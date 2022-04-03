@@ -1,6 +1,10 @@
 package com.example.spaceflightnews.ui.single
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +52,20 @@ class SingleFragment : Fragment(), CellClickListener {
         super.onViewCreated(view, savedInstanceState)
         viewModel.eventArticles.observe(viewLifecycleOwner, eventsListObserver)
         viewModel.launchArticles.observe(viewLifecycleOwner, launchesListObserver)
+
+        binding.readMore.setOnClickListener {
+            viewModel.singleArticle.value?.url?.let { it1 -> openWebPage(it1) }
+        }
+    }
+
+    private fun openWebPage(url: String) {
+        val webpage: Uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Log.e("ACTIVITY", e.toString())
+        }
     }
 
     private fun getRelatedNews() {
@@ -71,10 +89,10 @@ class SingleFragment : Fragment(), CellClickListener {
     }
 
     private val relatedNewsObserver = Observer<Article> {
-        if (it.events.isNotEmpty()) {
+        if (it.events.isNotEmpty() && viewModel.launchArticles.value == null) {
             viewModel.getEvents(it.events)
         }
-        if (it.launches.isNotEmpty()) {
+        if (it.launches.isNotEmpty() && viewModel.launchArticles.value == null) {
             viewModel.getLaunches(it.launches)
         } else {
             return@Observer
