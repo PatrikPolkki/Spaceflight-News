@@ -53,7 +53,7 @@ class SingleFragment : Fragment(), CellClickListener {
         viewModel.eventArticles.observe(viewLifecycleOwner, eventsListObserver)
         viewModel.launchArticles.observe(viewLifecycleOwner, launchesListObserver)
 
-        binding.readMore.setOnClickListener {
+        binding.readMoreButton.setOnClickListener {
             viewModel.singleArticle.value?.url?.let { it1 -> openWebPage(it1) }
         }
     }
