@@ -1,6 +1,5 @@
 package com.example.spaceflightnews.data.repository
 
-import android.util.Log
 import com.example.spaceflightnews.data.api.RetrofitInstance
 import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.utils.Recourse
@@ -27,26 +26,34 @@ object SpaceflightRepository {
         }
     }.flowOn(Dispatchers.IO)
 
-    fun getEvents(id: Long): Flow<List<Article>> = flow {
+    fun getEvents(id: Long): Flow<Recourse<List<Article>>> = flow {
         try {
+            emit(Recourse.Loading())
             val eventList = serviceCall.getEvents(id)
-            emit(eventList)
+            val filteredList = eventList.filter {
+                eventList.size < 6
+            }
+            emit(Recourse.Success(filteredList))
         } catch (e: HttpException) {
-            e.message?.let { Log.e("HttpException", it) }
+            emit(Recourse.Error(e.localizedMessage ?: "An unexpected error."))
         } catch (e: IOException) {
-            e.message?.let { Log.e("IOException", it) }
+            emit(Recourse.Error("Couldn't reach server."))
         }
     }.flowOn(Dispatchers.IO)
 
 
-    fun getLaunches(id: String): Flow<List<Article>> = flow {
+    fun getLaunches(id: String): Flow<Recourse<List<Article>>> = flow {
         try {
+            emit(Recourse.Loading())
             val launchList = serviceCall.getLaunches(id)
-            emit(launchList)
+            val filteredList = launchList.filter {
+                launchList.size < 6
+            }
+            emit(Recourse.Success(filteredList))
         } catch (e: HttpException) {
-            e.message?.let { Log.e("HttpException", it) }
+            emit(Recourse.Error(e.localizedMessage ?: "An unexpected error."))
         } catch (e: IOException) {
-            e.message?.let { Log.e("IOException", it) }
+            emit(Recourse.Error("Couldn't reach server."))
         }
     }.flowOn(Dispatchers.IO)
 

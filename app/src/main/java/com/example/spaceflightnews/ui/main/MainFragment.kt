@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.databinding.FragmentMainBinding
+import com.example.spaceflightnews.ui.ArticleListState
 
 
 class MainFragment : Fragment(), CellClickListener {

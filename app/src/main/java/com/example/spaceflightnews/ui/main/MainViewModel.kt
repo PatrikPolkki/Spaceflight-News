@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.data.repository.SpaceflightRepository
+import com.example.spaceflightnews.ui.ArticleListState
 import com.example.spaceflightnews.utils.Recourse
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ class MainViewModel : ViewModel() {
         get() = _articleResult
 
     init {
-        getArticles(7)
+        getArticles(20)
     }
 
     fun getArticles(limit: Int) {
@@ -43,9 +43,3 @@ class MainViewModel : ViewModel() {
         }
     }
 }
-
-data class ArticleListState(
-    val isLoading: Boolean = false,
-    val articles: List<Article> = emptyList(),
-    val error: String = ""
-)

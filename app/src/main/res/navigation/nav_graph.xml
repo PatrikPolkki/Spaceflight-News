@@ -19,5 +19,8 @@
         <argument
             android:name="article"
             app:argType="com.example.spaceflightnews.data.model.Article" />
+        <action
+            android:id="@+id/action_singleFragment_self"
+            app:destination="@id/singleFragment" />
     </fragment>
 </navigation>
