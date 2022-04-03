@@ -53,12 +53,23 @@ fun bindLoading(view: View, isLoading: Boolean) {
 
 @BindingAdapter("articlesVisibility")
 fun bindArticleVisibility(view: LinearLayout, articleList: List<Article>?) {
-    articleList?.let {
-
-    }
     if (articleList != null && articleList.isNotEmpty()) {
         view.visibility = View.VISIBLE
     } else {
         view.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("noArticles")
+fun bindNoArticles(view: View, article: Article) {
+    when (view) {
+        is TextView -> {
+            view.visibility =
+                if (article.events.isEmpty() && article.launches.isEmpty()) View.VISIBLE else View.GONE
+        }
+        else -> {
+            view.visibility =
+                if (article.events.isEmpty() && article.launches.isEmpty()) View.GONE else View.VISIBLE
+        }
     }
 }

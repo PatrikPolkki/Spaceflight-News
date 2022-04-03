@@ -7,20 +7,28 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.spaceflightnews.ui.main.MainFragment"
-        android:label="Spaceflights">
+        android:label="SPACEFLIGHT NEWS">
         <action
             android:id="@+id/action_mainFragment_to_singleFragment"
-            app:destination="@id/singleFragment" />
+            app:destination="@id/singleFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/singleFragment"
         android:name="com.example.spaceflightnews.ui.single.SingleFragment"
-        android:label="Article">
+        android:label="BACK">
         <argument
             android:name="article"
             app:argType="com.example.spaceflightnews.data.model.Article" />
         <action
             android:id="@+id/action_singleFragment_self"
-            app:destination="@id/singleFragment" />
+            app:destination="@id/singleFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 </navigation>
