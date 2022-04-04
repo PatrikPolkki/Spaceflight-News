@@ -16,7 +16,8 @@ import com.example.spaceflightnews.ui.ArticleListState
 
 
 class ArticleListFragment : Fragment(), ArticleClickListener {
-    private lateinit var binding: FragmentArticleListBinding
+    private var _binding: FragmentArticleListBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: ArticleListViewModel by viewModels()
 
     override fun onCreateView(
@@ -24,7 +25,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentArticleListBinding.inflate(layoutInflater)
+        _binding = FragmentArticleListBinding.inflate(layoutInflater)
         binding.apply {
             mainViewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
@@ -45,6 +46,11 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
             viewModel.getArticles(7)
             binding.swipeRefreshLayout.isRefreshing = false
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setArticleListToRv() {

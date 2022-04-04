@@ -22,7 +22,8 @@ import com.example.spaceflightnews.ui.ArticleListState
 class ArticleFragment : Fragment(), ArticleClickListener {
 
     private val args: ArticleFragmentArgs by navArgs()
-    private lateinit var binding: FragmentArticleBinding
+    private var _binding: FragmentArticleBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: ArticleViewModel by viewModels()
 
     override fun onCreateView(
@@ -30,7 +31,7 @@ class ArticleFragment : Fragment(), ArticleClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentArticleBinding.inflate(layoutInflater)
+        _binding = FragmentArticleBinding.inflate(layoutInflater)
         binding.apply {
             singleViewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
@@ -56,6 +57,11 @@ class ArticleFragment : Fragment(), ArticleClickListener {
         binding.readMoreButton.setOnClickListener {
             viewModel.singleArticle.value?.url?.let { it1 -> openWebPage(it1) }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun openWebPage(url: String) {
