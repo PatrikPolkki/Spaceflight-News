@@ -3,6 +3,7 @@ package com.example.spaceflightnews.data.repository
 import com.example.spaceflightnews.data.api.RetrofitInstance
 import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.utils.Recourse
+import com.example.spaceflightnews.utils.filterSizeOfList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -30,7 +31,7 @@ object SpaceflightRepository {
         try {
             emit(Recourse.Loading())
             val eventList = serviceCall.getEvents(id)
-            val filteredList = if (eventList.size > 5) eventList.take(5) else eventList
+            val filteredList = filterSizeOfList(eventList)
             emit(Recourse.Success(filteredList))
         } catch (e: HttpException) {
             emit(Recourse.Error(e.localizedMessage ?: "An unexpected error."))
@@ -43,7 +44,7 @@ object SpaceflightRepository {
         try {
             emit(Recourse.Loading())
             val launchList = serviceCall.getLaunches(id)
-            val filteredList = if (launchList.size > 5) launchList.take(5) else launchList
+            val filteredList = filterSizeOfList(launchList)
             emit(Recourse.Success(filteredList))
         } catch (e: HttpException) {
             emit(Recourse.Error(e.localizedMessage ?: "An unexpected error."))

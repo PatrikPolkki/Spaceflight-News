@@ -27,7 +27,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     ): View {
         _binding = FragmentArticleListBinding.inflate(layoutInflater)
         binding.apply {
-            mainViewModel = viewModel
+            articleListViewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
         }
 
