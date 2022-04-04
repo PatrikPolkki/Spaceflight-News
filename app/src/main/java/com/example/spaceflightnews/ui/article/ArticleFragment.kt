@@ -18,6 +18,7 @@ import com.example.spaceflightnews.data.model.Article
 import com.example.spaceflightnews.databinding.FragmentArticleBinding
 import com.example.spaceflightnews.ui.ArticleClickListener
 import com.example.spaceflightnews.ui.ArticleListState
+import com.example.spaceflightnews.utils.filterDuplicatesOut
 
 class ArticleFragment : Fragment(), ArticleClickListener {
 
@@ -33,7 +34,7 @@ class ArticleFragment : Fragment(), ArticleClickListener {
     ): View {
         _binding = FragmentArticleBinding.inflate(layoutInflater)
         binding.apply {
-            singleViewModel = viewModel
+            articleViewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
         }
         binding.relatedLaunchesRv.apply {
@@ -80,18 +81,15 @@ class ArticleFragment : Fragment(), ArticleClickListener {
 
     private val launchesListObserver = Observer<ArticleListState> {
         val adapter = binding.relatedLaunchesRv.adapter as RelatedArticlesAdapter
-        val relatedNewsList = it.articles.filter { relatedArticle ->
-            relatedArticle.id != viewModel.singleArticle.value?.id ?: return@Observer
-        }
+        val relatedNewsList = filterDuplicatesOut(it.articles, viewModel.singleArticle.value?.id)
         adapter.submitList(relatedNewsList)
+        return@Observer
     }
     private val eventsListObserver = Observer<ArticleListState> {
         val adapter = binding.relatedEventsRv.adapter as RelatedArticlesAdapter
-        val relatedNewsList = it.articles.filter { relatedArticle ->
-            relatedArticle.id != viewModel.singleArticle.value?.id ?: return@Observer
-        }
-
+        val relatedNewsList = filterDuplicatesOut(it.articles, viewModel.singleArticle.value?.id)
         adapter.submitList(relatedNewsList)
+        return@Observer
     }
 
     private val relatedArticlesObserver = Observer<Article> {

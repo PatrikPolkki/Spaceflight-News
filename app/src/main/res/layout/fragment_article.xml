@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="singleViewModel"
+            name="articleViewModel"
             type="com.example.spaceflightnews.ui.article.ArticleViewModel" />
     </data>
 
@@ -21,7 +21,7 @@
 
             <!-- Media -->
             <ImageView
-                setImage="@{singleViewModel.singleArticle}"
+                setImage="@{articleViewModel.singleArticle}"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:contentDescription="@string/article_image"
@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{singleViewModel.singleArticle.title}"
+                    android:text="@{articleViewModel.singleArticle.title}"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     tools:text="SpaceX rolls upgraded Super Heavy booster to the launch pad" />
 
@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@{singleViewModel.singleArticle.summary}"
+                    android:text="@{articleViewModel.singleArticle.summary}"
                     android:textAppearance="?attr/textAppearanceBody1"
                     tools:text="Satellite operator SES announced March 31 it is working with Canadian startup NorthStar Earth and Space on developing space situational awareness (SSA) data products to support its fleet of communications satellites." />
             </LinearLayout>
@@ -83,7 +83,7 @@
                         android:id="@+id/textView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{singleViewModel.singleArticle.newsSite}"
+                        android:text="@{articleViewModel.singleArticle.newsSite}"
                         android:textAppearance="?attr/textAppearanceBody1"
                         app:layout_constraintHorizontal_chainStyle="spread"
                         app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +92,7 @@
 
                     <TextView
                         android:id="@+id/textView2"
-                        date="@{singleViewModel.singleArticle}"
+                        date="@{articleViewModel.singleArticle}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
@@ -133,7 +133,7 @@
                 android:gravity="center">
 
                 <ProgressBar
-                    loading="@{singleViewModel.eventArticles.loading || singleViewModel.launchArticles.loading}"
+                    loading="@{articleViewModel.eventArticles.loading || articleViewModel.launchArticles.loading}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp" />
@@ -141,15 +141,15 @@
 
             <LinearLayout
                 android:id="@+id/relatedNewsContainer"
-                loading="@{singleViewModel.eventArticles.loading || singleViewModel.launchArticles.loading}"
-                noArticles="@{singleViewModel.singleArticle}"
+                loading="@{articleViewModel.eventArticles.loading || articleViewModel.launchArticles.loading}"
+                noArticles="@{articleViewModel.singleArticle}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="visible">
 
                 <LinearLayout
-                    articlesVisibility="@{singleViewModel.launchArticles.articles}"
+                    articlesVisibility="@{articleViewModel.launchArticles.articles}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -174,7 +174,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    articlesVisibility="@{singleViewModel.eventArticles.articles}"
+                    articlesVisibility="@{articleViewModel.eventArticles.articles}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -213,10 +213,11 @@
                 android:gravity="center">
 
                 <TextView
-                    noArticles="@{singleViewModel.singleArticle}"
+                    noArticles="@{articleViewModel.singleArticle}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:text="@string/no_related_articles_found"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
             </LinearLayout>

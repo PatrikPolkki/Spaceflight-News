@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="mainViewModel"
+            name="articleListViewModel"
             type="com.example.spaceflightnews.ui.articleList.ArticleListViewModel" />
     </data>
 
@@ -25,7 +25,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/article_rv"
-                loading="@{mainViewModel.articleResults.loading}"
+                loading="@{articleListViewModel.articleResults.loading}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +37,7 @@
 
         <ProgressBar
             android:id="@+id/progressBar"
-            loading="@{mainViewModel.articleResults.loading}"
+            loading="@{articleListViewModel.articleResults.loading}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
