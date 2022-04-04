@@ -1,4 +1,4 @@
-package com.example.spaceflightnews.ui.main
+package com.example.spaceflightnews.ui.articleList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,21 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spaceflightnews.data.model.Article
-import com.example.spaceflightnews.databinding.FragmentMainBinding
+import com.example.spaceflightnews.databinding.FragmentArticleListBinding
+import com.example.spaceflightnews.ui.ArticleClickListener
 import com.example.spaceflightnews.ui.ArticleListState
 
 
-class MainFragment : Fragment(), CellClickListener {
-    private lateinit var binding: FragmentMainBinding
-    private val viewModel: MainViewModel by viewModels()
+class ArticleListFragment : Fragment(), ArticleClickListener {
+    private lateinit var binding: FragmentArticleListBinding
+    private val viewModel: ArticleListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(layoutInflater)
+        binding = FragmentArticleListBinding.inflate(layoutInflater)
         binding.apply {
             mainViewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
@@ -31,7 +32,7 @@ class MainFragment : Fragment(), CellClickListener {
 
         binding.articleRv.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = MainAdapter(this@MainFragment)
+            adapter = ArticleListAdapter(this@ArticleListFragment)
         }
 
         setArticleListToRv()
@@ -51,12 +52,13 @@ class MainFragment : Fragment(), CellClickListener {
     }
 
     private val articleListObserver = Observer<ArticleListState> {
-        val adapter = binding.articleRv.adapter as MainAdapter
+        val adapter = binding.articleRv.adapter as ArticleListAdapter
         adapter.submitList(it.articles)
     }
 
-    override fun onCellClickListener(article: Article) {
-        val action = MainFragmentDirections.actionMainFragmentToSingleFragment(article)
+    override fun onArticleClickListener(article: Article) {
+        val action =
+            ArticleListFragmentDirections.actionArticleListFragmentToArticleFragment(article)
         this.findNavController().navigate(action)
     }
 }

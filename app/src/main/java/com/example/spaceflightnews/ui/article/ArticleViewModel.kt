@@ -1,4 +1,4 @@
-package com.example.spaceflightnews.ui.single
+package com.example.spaceflightnews.ui.article
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +11,7 @@ import com.example.spaceflightnews.utils.Recourse
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class SingleViewModel : ViewModel() {
+class ArticleViewModel : ViewModel() {
     private val repository = SpaceflightRepository
 
     private val _singleArticle: MutableLiveData<Article> by lazy {

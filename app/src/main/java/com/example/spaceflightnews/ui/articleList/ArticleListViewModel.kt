@@ -1,4 +1,4 @@
-package com.example.spaceflightnews.ui.main
+package com.example.spaceflightnews.ui.articleList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,12 +10,8 @@ import com.example.spaceflightnews.utils.Recourse
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class ArticleListViewModel : ViewModel() {
     private val repository = SpaceflightRepository
-
-    init {
-        getArticles(7)
-    }
 
     private val _articleResult: MutableLiveData<ArticleListState> by lazy {
         MutableLiveData<ArticleListState>()
@@ -23,6 +19,10 @@ class MainViewModel : ViewModel() {
 
     val articleResults: LiveData<ArticleListState>
         get() = _articleResult
+
+    init {
+        getArticles(7)
+    }
 
     fun getArticles(limit: Int) {
         viewModelScope.launch {

@@ -7,7 +7,7 @@
 
         <variable
             name="singleViewModel"
-            type="com.example.spaceflightnews.ui.single.SingleViewModel" />
+            type="com.example.spaceflightnews.ui.article.ArticleViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

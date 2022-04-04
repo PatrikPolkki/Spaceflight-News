@@ -1,4 +1,4 @@
-package com.example.spaceflightnews.ui.single
+package com.example.spaceflightnews.ui.articleList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spaceflightnews.data.model.Article
-import com.example.spaceflightnews.databinding.RelatedArticleItemBinding
-import com.example.spaceflightnews.ui.main.CellClickListener
+import com.example.spaceflightnews.databinding.ArticleItemBinding
+import com.example.spaceflightnews.ui.ArticleClickListener
 
-class SingleAdapter(private val cellClickListener: CellClickListener) :
-    ListAdapter<Article, SingleAdapter.ViewHolder>(DiffCallback) {
+class ArticleListAdapter(private val articleClickListener: ArticleClickListener) :
+    ListAdapter<Article, ArticleListAdapter.ViewHolder>(DiffCallback) {
 
     // Handles a changes in incoming list
     companion object {
@@ -26,12 +26,10 @@ class SingleAdapter(private val cellClickListener: CellClickListener) :
         }
     }
 
-    inner class ViewHolder(val binding: RelatedArticleItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ArticleItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            RelatedArticleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ArticleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -40,7 +38,7 @@ class SingleAdapter(private val cellClickListener: CellClickListener) :
         holder.binding.articleItem = articleItem
 
         holder.itemView.setOnClickListener {
-            cellClickListener.onCellClickListener(articleItem)
+            articleClickListener.onArticleClickListener(articleItem)
         }
     }
 }

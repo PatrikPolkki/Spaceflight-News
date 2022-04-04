@@ -2,30 +2,30 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/articleListFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.spaceflightnews.ui.main.MainFragment"
+        android:id="@+id/articleListFragment"
+        android:name="com.example.spaceflightnews.ui.articleList.ArticleListFragment"
         android:label="SPACEFLIGHT NEWS">
         <action
-            android:id="@+id/action_mainFragment_to_singleFragment"
-            app:destination="@id/singleFragment"
+            android:id="@+id/action_articleListFragment_to_articleFragment"
+            app:destination="@id/articleFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
-        android:id="@+id/singleFragment"
-        android:name="com.example.spaceflightnews.ui.single.SingleFragment"
+        android:id="@+id/articleFragment"
+        android:name="com.example.spaceflightnews.ui.article.ArticleFragment"
         android:label="BACK">
         <argument
             android:name="article"
             app:argType="com.example.spaceflightnews.data.model.Article" />
         <action
-            android:id="@+id/action_singleFragment_self"
-            app:destination="@id/singleFragment"
+            android:id="@+id/action_articleFragment_self"
+            app:destination="@id/articleFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"

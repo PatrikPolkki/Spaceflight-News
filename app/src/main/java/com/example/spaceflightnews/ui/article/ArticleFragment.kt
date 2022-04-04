@@ -1,4 +1,4 @@
-package com.example.spaceflightnews.ui.single
+package com.example.spaceflightnews.ui.article
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -15,33 +15,33 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spaceflightnews.data.model.Article
-import com.example.spaceflightnews.databinding.FragmentSingleBinding
+import com.example.spaceflightnews.databinding.FragmentArticleBinding
+import com.example.spaceflightnews.ui.ArticleClickListener
 import com.example.spaceflightnews.ui.ArticleListState
-import com.example.spaceflightnews.ui.main.CellClickListener
 
-class SingleFragment : Fragment(), CellClickListener {
+class ArticleFragment : Fragment(), ArticleClickListener {
 
-    private val args: SingleFragmentArgs by navArgs()
-    private lateinit var binding: FragmentSingleBinding
-    private val viewModel: SingleViewModel by viewModels()
+    private val args: ArticleFragmentArgs by navArgs()
+    private lateinit var binding: FragmentArticleBinding
+    private val viewModel: ArticleViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSingleBinding.inflate(layoutInflater)
+        binding = FragmentArticleBinding.inflate(layoutInflater)
         binding.apply {
             singleViewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
         }
         binding.relatedLaunchesRv.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = SingleAdapter(this@SingleFragment)
+            adapter = RelatedArticlesAdapter(this@ArticleFragment)
         }
         binding.relatedEventsRv.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = SingleAdapter(this@SingleFragment)
+            adapter = RelatedArticlesAdapter(this@ArticleFragment)
         }
         viewModel.addArticleToViewModel(args.article)
         getRelatedArticles()
@@ -73,14 +73,14 @@ class SingleFragment : Fragment(), CellClickListener {
     }
 
     private val launchesListObserver = Observer<ArticleListState> {
-        val adapter = binding.relatedLaunchesRv.adapter as SingleAdapter
+        val adapter = binding.relatedLaunchesRv.adapter as RelatedArticlesAdapter
         val relatedNewsList = it.articles.filter { relatedArticle ->
             relatedArticle.id != viewModel.singleArticle.value?.id ?: return@Observer
         }
         adapter.submitList(relatedNewsList)
     }
     private val eventsListObserver = Observer<ArticleListState> {
-        val adapter = binding.relatedEventsRv.adapter as SingleAdapter
+        val adapter = binding.relatedEventsRv.adapter as RelatedArticlesAdapter
         val relatedNewsList = it.articles.filter { relatedArticle ->
             relatedArticle.id != viewModel.singleArticle.value?.id ?: return@Observer
         }
@@ -99,8 +99,8 @@ class SingleFragment : Fragment(), CellClickListener {
         }
     }
 
-    override fun onCellClickListener(article: Article) {
-        val action = SingleFragmentDirections.actionSingleFragmentSelf(article)
+    override fun onArticleClickListener(article: Article) {
+        val action = ArticleFragmentDirections.actionArticleFragmentSelf(article)
         this.findNavController().navigate(action)
     }
 }

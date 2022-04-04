@@ -40,7 +40,6 @@ fun bindDate(view: TextView, article: Article) {
 
 @BindingAdapter("loading")
 fun bindLoading(view: View, isLoading: Boolean) {
-
     when (view) {
         is ProgressBar -> {
             view.visibility = if (isLoading) View.VISIBLE else View.GONE
